@@ -1,0 +1,122 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.fp.com:
+  peer0.org1.fp.com:
+  peer1.org1.fp.com:
+  peer2.org1.fp.com:
+
+
+networks:
+  basic:
+
+services:
+
+  orderer.fp.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.fp.com
+    container_name: orderer.fp.com
+    networks:
+      - basic
+
+  peer0.org1.fp.com:
+    container_name: peer0.org1.fp.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org1.fp.com
+    networks:
+      - basic
+      
+  peer1.org1.fp.com:
+    container_name: peer1.org1.fp.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org1.fp.com
+    networks:
+      - basic
+
+  peer2.org1.fp.com:
+    container_name: peer2.org1.fp.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.org1.fp.com
+    networks:
+      - basic
+
+  # root.fp.com:
+  #   image: hyperledger/fabric-ca:$IMAGE_TAG
+  #   container_name: root.fp.com
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-rootserver
+  #     - FABRIC_CA_SERVER_CA_NAME=root.fp.com
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=false
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw --cfg.affiliations.allowremove  --cfg.identities.allowremove'
+  #  # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile #/etc/hyperledger/fabric-ca-server-config/${PRIVATE_KEY} 
+  #   volumes:
+  #     #- ./crypto-config/peerOrganizations/org1.fp.com/ca/:/etc/hyperledger/fabric-ca-rootserver-config
+  #     - ./rootCA:/etc/hyperledger/fabric-ca-rootserver   
+  #   ports:
+  #     - "7054:7054"
+  #   networks:
+  #     - basic
+      
+  # middle1.fp.com:
+  #   image: hyperledger/fabric-ca:$IMAGE_TAG
+  #   container_name: middle1.fp.com
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-middleserver
+  #     - FABRIC_CA_SERVER_CA_NAME=middle1.fp.com
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=false
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -u http://admin:adminpw@root.fp.com:7054 -p 7055 --cfg.affiliations.allowremove  --cfg.identities.allowremove'
+  #  # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile #/etc/hyperledger/fabric-ca-server-config/${PRIVATE_KEY} 
+  #   volumes:
+  #     #- ./crypto-config/peerOrganizations/org1.fp.com/ca/:/etc/hyperledger/fabric-ca-middleserver-config
+  #     - ./middleCA:/etc/hyperledger/fabric-ca-middleserver 
+  #   ports:
+  #     - "7055:7055"
+  #   depends_on:
+  #     - root.fp.com
+  #   networks:
+  #     - basic
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.org1.fp.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/users/Admin@org1.fp.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.fp.com
+      - peer0.org1.fp.com
+      - peer1.org1.fp.com
+      - peer2.org1.fp.com
+    networks:
+      - basic
+      
+ 
