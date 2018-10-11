@@ -6,7 +6,7 @@
 1. 将生成的ca拷贝至crypto-config对应文件夹下，脚本：cacopy.sh
 1. 利用生成的msp生成创世快，脚本：genesis.sh 
 1. 启动fabric网络并安装chaincode，脚本：updown.sh
-1. 安装chaincode，脚本ccpoor.sh 
+1. 安装chaincode，脚本official.sh 
 
 注：
 
