@@ -21,8 +21,7 @@ function networkDown() {
 }
 
 function printHelp() {
-	echo "./start.sh  [command]"
-	echo "[command]"
+	echo "./updown.sh  [command]"
 	echo "up      ---启动网络"
 	echo "down    ---关闭网络"
 	echo "restart ---重启网络"

@@ -17,7 +17,7 @@ function networkDown() {
 }
 
 function printHelp() {
-	echo "./start.sh  [command]"
+	echo "./updownca.sh  [command]"
 	echo "--------------------"
 	echo "up      ---启动ca网络"
 	echo "down    ---关闭ca网络"

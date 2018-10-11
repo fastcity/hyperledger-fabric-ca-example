@@ -21,12 +21,12 @@ function networkDown() {
 }
 
 function printHelp() {
-	echo "./start.sh  [command]"
-	echo "[command]"
-	echo "up  ---启动网络并测试"
-	echo "down ---关闭网络"
+	echo "./updowndev.sh  [command]"
+	echo "-------------------------"
+	echo "up      ---启动网络"
+	echo "down    ---关闭网络"
 	echo "restart ---重启网络并测试"
-	echo "----------"
+	echo "----此为denbug模式------"
 }
 
 MODE=$1
