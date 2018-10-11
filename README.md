@@ -1,4 +1,4 @@
-#### 中国社会扶贫网区块链项目部署
+#### hyperledger-fabirc-ca-server的生产示例
 
 1. 先启动ca，文件docker-ca.yaml，启动脚本：updownca.sh，默认的ca的文件在 ./ca 下
 
@@ -9,10 +9,11 @@
 1. 安装chaincode，脚本ccpoor.sh 
 
 注：
+
 - 第一次启动时，请将ca文件夹fabric-ca-files文件夹里的东西删除
 
+- 此例子有中间ca,默认:localhost:7055
 - 此fabric根据fabric-samples/first-network修改而来，一个orderer 三个peer
-
 - 节点名称：orderer.fp.com peer0.fp.com peer1.fp.com peer2.fp.com，channel名称：mychannel，组织名称Org1Msp
 - ca 生成需要在同一电脑上，因为需要复制ca-server的中间ca下的ca-chain.pem，若不再一个电脑上可以将caget.sh里面的ENROLLURL变量修改为正确的url，随后手动将ca-chain.pem复制到rootca路径下，更名为ca.crt，如orderre的路径:ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
 - orderer的cafile路径为：crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
