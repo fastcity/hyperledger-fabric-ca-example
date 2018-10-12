@@ -9,7 +9,7 @@ version: '2'
   # peer2.org1.fp.com:
 
 networks:
-  basic:
+  basic-ca:
 
 services:
   root.fp.com:
@@ -27,33 +27,16 @@ services:
     ports:
       - "7054:7054"
     networks:
-      - basic
-
-  # roottls.fp.com:
-  #   image: hyperledger/fabric-ca:$IMAGE_TAG
-  #   container_name: roottls.fp.com
-  #   environment:
-  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-roottlsserver
-  #     - FABRIC_CA_SERVER_CA_NAME=roottls.fp.com
-  #     - FABRIC_CA_SERVER_TLS_ENABLED=false
-  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -p 8054 --cfg.affiliations.allowremove  --cfg.identities.allowremove'
-  #  # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile #/etc/hyperledger/fabric-ca-server-config/${PRIVATE_KEY} 
-  #   volumes:
-  #     #- ./crypto-config/peerOrganizations/org1.fp.com/ca/:/etc/hyperledger/fabric-ca-rootserver-config
-  #     - ./roottlsCA:/etc/hyperledger/fabric-ca-roottlsserver   
-  #   ports:
-  #     - "8054:8054"
-  #   networks:
-  #     - basic
+      - basic-ca
       
-  middle1.fp.com:
+  middle.fp.com:
     image: hyperledger/fabric-ca:$IMAGE_TAG
-    container_name: middle1.fp.com
+    container_name: middle.fp.com
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-middleserver
-      - FABRIC_CA_SERVER_CA_NAME=middle1.fp.com
+      - FABRIC_CA_SERVER_CA_NAME=middle.fp.com
       - FABRIC_CA_SERVER_TLS_ENABLED=false
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -u http://admin:adminpw@root.fp.com:7054 -p 7055 --cfg.affiliations.allowremove  --cfg.identities.allowremove'
+    command: sh -c 'fabric-ca-server start -b admin:vsaCNbZGpOtR -u http://admin:adminpw@root.fp.com:7054 -p 7055 --cfg.affiliations.allowremove  --cfg.identities.allowremove'
    # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile #/etc/hyperledger/fabric-ca-server-config/${PRIVATE_KEY} 
     volumes:
       #- ./crypto-config/peerOrganizations/org1.fp.com/ca/:/etc/hyperledger/fabric-ca-middleserver-config
@@ -63,4 +46,4 @@ services:
     depends_on:
       - root.fp.com
     networks:
-      - basic
+      - basic-ca

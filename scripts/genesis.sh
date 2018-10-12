@@ -13,15 +13,23 @@ SDIR=${PWD}
 export FABRIC_CFG_PATH=$SDIR
 CHANNEL_NAME=mychannel
 
+
+# 判断路径是否存在
+function mkdirPath() {
+	if [ ! -d channel-artifacts ]; then
+		mkdir channel-artifacts
+	fi
+}
+
 echo "#############################################################################"
 echo "############################## 生成创世块 ####################################"
 echo "#############################################################################"
-
+mkdirPath
 configtxgen -profile OneOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 configtxgen -profile OneOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
 configtxgen -profile OneOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
 
-echo "################################ 创世块生成 成功###############################"
+echo "################################  创世块生成 成功###############################"
 
 # 恢复之前的路径
 cd $ININT_PATH

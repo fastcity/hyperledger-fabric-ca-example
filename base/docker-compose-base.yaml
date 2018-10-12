@@ -28,8 +28,8 @@ services:
     - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
     - ../crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/msp:/var/hyperledger/orderer/msp
     - ../crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/:/var/hyperledger/orderer/tls
-    # - orderer.fp.com:/var/hyperledger/production/orderer
-    - /var/hyperledger/orderer:/var/hyperledger/production/orderer
+    - orderer.fp.com:/var/hyperledger/production/orderer
+    # - /var/hyperledger/orderer:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
 
@@ -48,8 +48,8 @@ services:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/msp:/etc/hyperledger/fabric/msp
         - ../crypto-config/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls:/etc/hyperledger/fabric/tls
-        # - peer0.org1.fp.com:/var/hyperledger/production
-        - /var/hyperledger/peer0:/var/hyperledger/production
+        - peer0.org1.fp.com:/var/hyperledger/production
+        # - /var/hyperledger/peer0:/var/hyperledger/production
     ports:
       - 7051:7051
       - 7053:7053

@@ -278,8 +278,12 @@ function askProceed() {
 function printHelp() {
 	echo "======./caget.sh url  例: ./caget.sh localhost:7055======"
 }
+
+# 生成ca的流程
 function control() {
-	echo "==========start get ca=========="
+	echo "#####################################################"
+	echo "####################get CA start#######################"
+	echo "#####################################################"
 	initCAAdmin
 	addOrg
 	ordererRegister
@@ -292,18 +296,22 @@ function control() {
 	peergetcacert
 	peergetenrolladmin
 	peerTLS
-	echo "===========success ================="
+	echo "#####################################################"
+	echo "####################get CA down#######################"
+	echo "#####################################################"
+
+	# 复制证书
+	scripts/cacopy.sh
 }
 
 MODE=$1
 
-if [ "${MODE}" == "help" ]; then 
+if [ "${MODE}" == "help" ]; then
 	printHelp
 	exit 1
 elif [ "${MODE}" != "" ]; then
 	ENROLLURL=$MODE
 fi
-
 echo "==============use:ca--url:$ENROLLURL=========="
 askProceed
 control
