@@ -7,6 +7,8 @@
 set -e
 
 function networkUp() {
+	scripts/genesis.sh
+	sleep 1
 	echo "start docker-compose  up=================="
 	docker-compose -f docker-compose-cli.yaml up -d
 
