@@ -9,13 +9,14 @@
 
 注：
 
-- 此例子ca默认启动一个rootca 一个middleca，中间ca默认url:localhost:7055
+- 此例子ca默认启动一个rootca 一个middleca，中间ca默认url:localhost:7055,生成ca证书的流程主要在caget.sh中
 
-- 生成ca的流程主要在caget.sh中
-- 第一次启动时，请将ca文件夹fabric-ca-files文件夹里的东西删除
-- 此fabric根据fabric-samples/first-network修改而来，一个orderer 三个peer
+- 此例子有一个orderer 三个peer,根据hyperledger项目的fabric-samples/first-network修改而来
+
 - 节点名称：orderer.fp.com peer0.fp.com peer1.fp.com peer2.fp.com，channel名称：mychannel，组织名称Org1Msp
+
 - ca 生成需要在同一电脑上，因为需要复制ca/middleCA/ca-chain.pem，若不在一个电脑上需要手动将ca/middleCA/ca-chain.pem复制到orderer peer的对应路径下，更名为ca.crt，如orderer的路径:crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
+
 - orderer的cafile路径为：crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
 
 - 证书路径，可参考docker-compose-cli.yaml，base下的dockerfile. 以下列出peer0的，做参考:
