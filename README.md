@@ -1,15 +1,15 @@
 #### hyperledger-fabirc-ca-server的生产示例
 
 用法:
-1. ./updownca.sh up  启动ca，文件docker-ca.yaml，启动脚本：updownca.sh，默认的ca的文件在 ./ca 下
+1. ./updownca.sh up 启动docker-ca.yaml，生成 ./ca 文件夹
 
-1. ./caget.sh 生成ca文件，脚本：caget.sh。 默认生成在 ./fabric-ca-files 下，生成成功之后会执行scripts/cacopy.sh 将生产的ca复制到crtpto-config对应目录下
-1. ./updown.sh up 启动fabric网络并安装chaincode，脚本：updown.sh，启动前会先执行scripts/genesis.sh 生成创世块
-1. ./official.sh  安装chaincode，脚本ccofficial.sh 
+1. ./caget.sh 生成ca msp证书信息。 默认生成在 ./fabric-ca-files文件夹下，生成成功之后会执行scripts/cacopy.sh 将生成的证书复制到crtpto-config对应目录下
+1. ./updown.sh up 启动fabric网络，启动前会先执行scripts/genesis.sh 生成创世块
+1. ./official.sh  安装chaincode
 
 注：
 
-- 此例子默认启动一个rootca 一个middleca，中间ca默认url:localhost:7055
+- 此例子ca默认启动一个rootca 一个middleca，中间ca默认url:localhost:7055
 
 - 生成ca的流程主要在caget.sh中
 - 第一次启动时，请将ca文件夹fabric-ca-files文件夹里的东西删除

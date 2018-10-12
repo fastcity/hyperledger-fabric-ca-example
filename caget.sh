@@ -64,8 +64,17 @@ function copyRootCA() {
 		echo "=======copyrootca：没有rootca 需要手动复制======"
 	fi
 }
-
+# 判断路径是否存在
+function mkdirPath() {
+	if [ -d $HOME_DIR ]; then
+		echo "=========================================="
+		echo "===============清空 $HOME_DIR/*============="
+		echo "==========================================="
+		rm -rf $HOME_DIR/*
+	fi
+}
 function initCAAdmin() {
+	mkdirPath
 	echo "==============initCAAdmin======="
 	export FABRIC_CA_CLIENT_HOME=$HOME_DIR/caAdmin
 	fabric-ca-client enroll -d -u http://admin:vsaCNbZGpOtR@$ENROLLURL
