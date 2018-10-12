@@ -2,10 +2,8 @@
 
 1. 先启动ca，文件docker-ca.yaml，启动脚本：updownca.sh，默认的ca的文件在 ./ca 下
 
-1. 生成ca文件，脚本：caget.sh。 默认生成在 ./fabric-ca-files 下，可以修改shell文件的路径
-1. 将生成的ca拷贝至crypto-config对应文件夹下，脚本：cacopy.sh
-1. 利用生成的msp生成创世快，脚本：genesis.sh 
-1. 启动fabric网络并安装chaincode，脚本：updown.sh
+1. 生成ca文件，脚本：caget.sh。 默认生成在 ./fabric-ca-files 下，生成成功之后会执行scripts/cacopy.sh 将生产的ca复制到crtpto-config对应目录下
+1. 启动fabric网络并安装chaincode，脚本：updown.sh,启动前会先执行scripts/genesis.sh 生成创世块
 1. 安装chaincode，脚本official.sh 
 
 注：
@@ -22,10 +20,10 @@
 
 ----------
 
-> - CORE_PEER_TLS_ENABLED=true
-> - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.crt
-> - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.key
-> - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/ca.crt
-> - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/users/Admin@org1.fp.com/msp
+> CORE_PEER_TLS_ENABLED=true  
+CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.crt  
+CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/server.key   
+CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/peers/peer0.org1.fp.com/tls/ca.crt   
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.fp.com/users/Admin@org1.fp.com/msp   
 
 -------------
