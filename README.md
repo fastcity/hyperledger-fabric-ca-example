@@ -5,7 +5,7 @@
 
 1. ./caget.sh 生成ca msp证书信息。 默认生成在 ./fabric-ca-files文件夹下，生成成功之后会执行scripts/cacopy.sh 将生成的证书复制到crtpto-config对应目录下
 1. ./updown.sh up 启动fabric网络，启动前会先执行scripts/genesis.sh 生成创世块
-1. ./official.sh  安装chaincode
+1. ./ccofficial.sh  安装chaincode
 
 注：
 
