@@ -1,19 +1,21 @@
 #### hyperledger-fabirc-ca-server的生产示例
 
-1. 先启动ca，文件docker-ca.yaml，启动脚本：updownca.sh，默认的ca的文件在 ./ca 下
+用法:
+1. ./updownca.sh up  启动ca，文件docker-ca.yaml，启动脚本：updownca.sh，默认的ca的文件在 ./ca 下
 
-1. 生成ca文件，脚本：caget.sh。 默认生成在 ./fabric-ca-files 下，生成成功之后会执行scripts/cacopy.sh 将生产的ca复制到crtpto-config对应目录下
-1. 启动fabric网络并安装chaincode，脚本：updown.sh，启动前会先执行scripts/genesis.sh 生成创世块
-1. 安装chaincode，脚本official.sh 
+1. ./caget.sh 生成ca文件，脚本：caget.sh。 默认生成在 ./fabric-ca-files 下，生成成功之后会执行scripts/cacopy.sh 将生产的ca复制到crtpto-config对应目录下
+1. ./updown.sh up 启动fabric网络并安装chaincode，脚本：updown.sh，启动前会先执行scripts/genesis.sh 生成创世块
+1. ./official.sh  安装chaincode，脚本ccofficial.sh 
 
 注：
 
 - 此例子默认启动一个rootca 一个middleca，中间ca默认url:localhost:7055
 
+- 生成ca的流程主要在caget.sh中
 - 第一次启动时，请将ca文件夹fabric-ca-files文件夹里的东西删除
 - 此fabric根据fabric-samples/first-network修改而来，一个orderer 三个peer
 - 节点名称：orderer.fp.com peer0.fp.com peer1.fp.com peer2.fp.com，channel名称：mychannel，组织名称Org1Msp
-- ca 生成需要在同一电脑上，因为需要复制ca-server的中间ca下的ca-chain.pem，若不再一个电脑上可以将caget.sh里面的ENROLLURL变量修改为正确的url，随后手动将ca-chain.pem复制到rootca路径下，更名为ca.crt，如orderre的路径:ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
+- ca 生成需要在同一电脑上，因为需要复制ca/middleCA/ca-chain.pem，若不在一个电脑上需要手动将ca/middleCA/ca-chain.pem复制到orderer peer的对应路径下，更名为ca.crt，如orderer的路径:crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
 - orderer的cafile路径为：crypto-config/ordererOrganizations/fp.com/orderers/orderer.fp.com/tls/ca.crt
 
 - 证书路径，可参考docker-compose-cli.yaml，base下的dockerfile. 以下列出peer0的，做参考:
